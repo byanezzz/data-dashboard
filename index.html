@@ -3,12 +3,66 @@
   <head>
     <meta charset="utf-8">
     <title>Data Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
   </head>
   <body>
+	<!-- barra navegadora -->
+	<header id="navigationbar" class="fixed-top">
+		<div class="logo">
+			<a href="index.html"><img src="assets/images/laboratoria-logo.png" id="logolab" alt="Laboratoria"></a>
+		</div>
+		<input class="btn btn-warning" type="button" value="Lima">
+		<input class="btn btn-warning" type="submit" value="Ciudad de México">
+		<input class="btn btn-warning" type="reset" value="Arequipa">
+		<input class="btn btn-warning" type="reset" value="Santiago de Chile">
+	</header>
+	<!-- FIN barra navegadora -->
+
+<!-- barra navegadora lateral-->
+	<section id="lateral">
+	<span><i class="fa fa fa-th-large"> OVERVIEW </i></span>
+  
+	<div class="sidebar left ">
+	  <ul class="list-sidebar bg-defoult">
+	    <li> <a href="#" data-toggle="collapse" data-target="#dashboard" class="collapsed active" > <i class="fa fa-graduation-cap"></i> <span class="nav-label"> Stundents </span> <span class="fa fa-chevron-left pull-right"></span> </a>
+	      <ul class="sub-menu collapse" id="dashboard">
+	        <li class="active"><a href="#">2017 (5th generation)</a></li>
+	        <li><a href="#">2017 (4th generation)</a></li>
+	        <li><a href="#">2016 (3th generation)</a></li>
+	        <li><a href="#">2016 (2nd generation)</a></li>
+	        <li><a href="#">2015 (1th generation)</a></li>
+	      </ul>
+	    </li>
+	    <li> <a href="#" data-toggle="collapse" data-target="#products" class="collapsed active" > <i class="fa fa-user-o"></i> <span class="nav-label">Teachers</span> <span class="fa fa-chevron-left pull-right"></span> </a>
+	      <ul class="sub-menu collapse" id="products">
+	        <li class="active"><a href="#">Profiles</a></li>
+	        <li><a href="#">Evaluation</a></li>
+	      </ul>
+	    </li>
+	    <li> <a href="#" data-toggle="collapse" data-target="#e-commerce" class="collapsed active" ><i class="fa fa-shopping-cart"></i> <span class="nav-label">XXX</span><span class="fa fa-chevron-left pull-right"></span></a>
+	      <ul  class="sub-menu collapse" id="e-commerce" >
+	        <li><a href=""> xxx</a></li>
+	        <li><a href=""> xxx</a></li>
+	        <li><a href="">xxx</a></li>
+	      </ul>
+	    </li>
+	    <li> <a href=""><i class="fa fa-pie-chart"></i> <span class="nav-label">xxx</span> </a></li>
+	    <li> <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label">xxx</span></a> </li>
+	  </ul>
+	</div>
+	</section>
+<!-- FIN barra navegadora lateral-->
 
 		<!-- Base de datos -->
 		<script src="./js/data.js"></script>
 		<!-- Aquí va tus archivos JS -->
     <script src="./js/app.js"></script>
+    <!-- enlace a bootstrap -->
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	<!-- FIN enlace a bootstrap -->
   </body>
 </html>
