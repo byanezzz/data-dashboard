@@ -1,3 +1,11 @@
+/*Código barra lateral*/
+$(document).ready(function(){
+   $('button').click(function(){
+       $('.sidebar').toggleClass('fliph');
+   });
+});
+/*FIN Código barra lateral*/
+
 /*
  * Funcionalidad de tu producto
  */
