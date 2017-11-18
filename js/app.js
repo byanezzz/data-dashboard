@@ -1,3 +1,5 @@
+
+
 /*Código barra lateral*/
 $(document).ready(function(){
    $('button').click(function(){
@@ -6,11 +8,9 @@ $(document).ready(function(){
 });
 /*FIN Código barra lateral*/
 
-/*
- * Funcionalidad de tu producto
- */
+/*INICIO Código dasshboard*/
 google.charts.load('current', {'packages':['bar']});
-google.charts.setOnLoadCallback(enrollmentDraw);
+
  
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(techSkillCakeDraw);
@@ -19,7 +19,6 @@ google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(achievementDraw);
 
 function techSkillCakeDraw() {
-
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Topping');
     data.addColumn('number', 'Slices');
@@ -40,13 +39,23 @@ function techSkillCakeDraw() {
     chart2.draw(data,options);
 }
 
-function enrollmentDraw() {
-  var data = google.visualization.arrayToDataTable([
+function enrollmentDraw(data) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string','Sprint');
+  data.addColumn('number','Activas');
+  for(var i in dataG1){
+    data.addRows([
+      [i,dataG1[i]]          
+    ]);
+  }
+  
+  /*var data = google.visualization.arrayToDataTable(
+  [
     ['Spring', 'Activas'],
     ['S1', 1000],
     ['S2', 1170],
     ['S3', 660]    
-  ]);
+  ]);*/
 
   var options = {
     chart: {
@@ -68,7 +77,25 @@ function enrollmentDraw() {
 
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
-
+var dataG1={};
+function enrollment(data){
+  dataG1={};
+  var sprintStudent;
+  if(data!==undefined && data.hasOwnProperty("students")){
+  for(var i=0; i<data.students.length;i++){    
+    if(data.students[i].hasOwnProperty("sprints")){
+      sprintStudent=data.students[i].sprints 
+      for(var j=0; j<sprintStudent.length;j++){
+        if(dataG1.hasOwnProperty('S'+sprintStudent[j].number)){
+          dataG1['S'+sprintStudent[j].number]=dataG1['S'+sprintStudent[j].number]+1;
+        }else{
+          dataG1['S'+sprintStudent[j].number]=1;
+        }
+      }
+    }
+  }
+  }
+}
 
 function achievementDraw() {
   var data = google.visualization.arrayToDataTable([
@@ -150,44 +177,39 @@ function drawChart() {
   chart.draw(data, options);
   chart2.draw(data,options2);
 }
+ //Datos generales para graficar
+var dashboardGenerations=document.getElementsByName("dashboardGeneration");
+var sedes=document.getElementsByName("sede");
+var sede="";
+var periodo="";
+var dataPeriodo="";
 
-//CALCULOS MATEMATICOS PARA GRAFICAR
-//Informacion general de estudiantes
-var generationsSCL=new Object;
-for (var i in data.SCL){
-    generationsSCL[i]=data.SCL[i];
-}
-console.log(generationsSCL);
-var studentsGenerationsSCL=new Object;
-for (var i in generationsSCL){
-    studentsGenerationsSCL[i]=generationsSCL[i].students;
-}
-console.log(studentsGenerationsSCL);
-
-var activeGeneration=new Object;
-for (var i in studentsGenerationsSCL){
-    activeGeneration[i]=generationsSCL[i].students;
+for (var i=0; i<sedes.length;i++){
+  periodo="";
+  sedes[i].addEventListener("click", function(){
+    sede=this.id;
+  })
 }
 
+for (var i=0; i<dashboardGenerations.length;i++){
+  dashboardGenerations[i].addEventListener("click", function(){
+    periodo=this.className;
+    dataSedePeriodo();
+  })
+}
 
-/*Porcentaje y numero total de alumnas que abandonan 
-por generación*/
+function dataSedePeriodo(){
+  dataPeriodo=data[sede][periodo];
+  enrollment(dataPeriodo);
+  google.charts.setOnLoadCallback(enrollmentDraw(dataG1));  
+};
 
+/*FIN Código dashboard*/
 
-/*var activeFalse=0;
-var total=0;
+/*INICIO students*/
 
-for (var i in studentsObj){
-    if(studentsObj[i].active==false){
-        activeFalse++;
-    }
-    total++;
-}*/
-//Total de numero de estudiantes
-//total;
-//Porcentaje total de alumnas que abandonan
-//var dropout=(activeFalse/total)*100;
+/*FIN students*/
 
+/*INICIO teachers*/
 
-
-
+/*FIN teachers*/

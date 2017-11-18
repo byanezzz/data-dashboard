@@ -47,7 +47,9 @@ html, body {
     height: 50em;
 	
 }
-
+#lateral{
+    background-color:#000;
+}
 article, aside, details, figcaption, figure, footer, header, main, menu, nav, section, summary {
 	display: block;
 }
