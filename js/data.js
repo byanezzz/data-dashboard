@@ -1,6 +1,6 @@
 var data = {
   'AQP': {
-    '2016-2': {
+    '20162': {
       'students': [
         {
           'name': 'Donna Sloper',
@@ -591,7 +591,7 @@ var data = {
         }
       ]
     },
-    '2017-1': {
+    '20171': {
       'students': [
         {
           'name': 'Collette Tubby',
@@ -1064,7 +1064,7 @@ var data = {
     }
   },
   'CDMX': {
-    '2017-1': {
+    '20171': {
       'students': [
         {
           'name': 'Jada Curgenuer',
@@ -1787,7 +1787,7 @@ var data = {
         }
       ]
     },
-    '2017-2': {
+    '20172': {
       'students': [
         {
           'name': 'Julieta Readhead',
@@ -2416,7 +2416,7 @@ var data = {
     }
   },
   'LIM': {
-    '2016-2': {
+    '20162': {
       'students': [
         {
           'name': 'Shalna Peddersen',
@@ -2902,7 +2902,7 @@ var data = {
         }
       ]
     },
-    '2017-1': {
+    '20171': {
       'students': [
         {
           'name': 'Marie-jeanne Bardwall',
@@ -3418,7 +3418,7 @@ var data = {
         }
       ]
     },
-    '2017-2': {
+    '20172': {
       'students': [
         {
           'name': 'Melany Brougham',
@@ -3630,7 +3630,7 @@ var data = {
     }
   },
   'SCL': {
-    '2016-2': {
+    '20162': {
       'students': [
         {
           'name': 'Leela Nunson',
@@ -3849,7 +3849,7 @@ var data = {
         }
       ]
     },
-    '2017-1': {
+    '20171': {
       'students': [
         {
           'name': 'Emmalee Bowery',
@@ -4346,7 +4346,7 @@ var data = {
         }
       ]
     },
-    '2017-2': {
+    '20172': {
       'students': [
         {
           'name': 'Donna Sloper',
