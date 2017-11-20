@@ -7,11 +7,182 @@ $(document).ready(function(){
 });
 /*FIN Código barra lateral*/
 
-/*INICIO Código dasshboard*/
+var board=document.createElement("section");
+board.setAttribute("id","board");
+board.setAttribute("class","float-right");
+document.body.appendChild(board);
+ //Datos generales para graficar
+ var dashboardGenerations=document.getElementsByName("dashboardGeneration");
+ var sedes=document.getElementsByName("sede");
+ var sede="";
+ var periodo="";
+ var dataPeriodo="";
+ 
+ for (var i=0; i<sedes.length;i++){
+   periodo="";
+   sedes[i].addEventListener("click", function(){
+     sede=this.id;
+   })
+ }
+ 
+ for (var i=0; i<dashboardGenerations.length;i++){
+   dashboardGenerations[i].addEventListener("click", function(){
+    while (board.firstChild) {
+       board.removeChild(board.firstChild);
+     }
+     periodo=this.className;    
+     dashboardDraw();
+     dataSedePeriodo();
+   })
+ }
+ 
+ function dataSedePeriodo(){
+   listTech.style.display="initial";
+   listHse.style.display="initial";
+   dataPeriodo=data[sede][periodo];
+   
+   enrollment(dataPeriodo);
+   google.charts.setOnLoadCallback(enrollmentDraw(dataG1));
+ 
+   achievement(dataPeriodo);
+   google.charts.setOnLoadCallback(achievementDraw(dataG2));
+ 
+   nps(dataPeriodo);
+   google.charts.setOnLoadCallback(npsDraw(dataG3)); 
+ 
+   selectSprint(dataPeriodo);   
+ }
+
+var selectTech="";
+var selectHse="";
+var listTech="";
+var listHse="";
+var enrollmentDiv="";
+var achievementDiv="";
+var npsDiv="";
+
+function dashboardDraw(){
+  var firstDbRow=document.createElement("div");
+  firstDbRow.setAttribute("class","center");
+  board.appendChild(firstDbRow);
+
+  enrollmentDiv= document.createElement("div");
+  enrollmentDiv.setAttribute("id","columnchart_material");
+  enrollmentDiv.classList.add("d-inline-block","chartStyle");
+  firstDbRow.appendChild(enrollmentDiv);
+
+  achievementDiv= document.createElement("div");
+  achievementDiv.setAttribute("id","achievement");
+  achievementDiv.classList.add("d-inline-block","chartStyle");
+  firstDbRow.appendChild(achievementDiv);
+
+  npsDiv= document.createElement("div");
+  npsDiv.setAttribute("id","nps");
+  npsDiv.classList.add("d-inline-block","chartStyle");
+  firstDbRow.appendChild(npsDiv);
+
+  var secondDbRow=document.createElement("div");
+  board.appendChild(secondDbRow);
+
+  var techGraphDiv= document.createElement("div");
+  techGraphDiv.setAttribute("id","techGraph");
+  techGraphDiv.classList.add("d-inline-block");
+  secondDbRow.appendChild(techGraphDiv);
+
+  listTech=document.createElement('div');
+  listTech.setAttribute("id","listTech");
+  techGraphDiv.appendChild(listTech);
+  
+  selectTech=document.createElement('select');
+  selectTech.classList.add("form-control","form-control-sm");
+  listTech.appendChild(selectTech);
+
+  var optionTech=document.createElement('option');
+  selectTech.appendChild(optionTech);
+
+  selectTech.addEventListener("change",function(){
+    if(this.value!==-1){
+      histogramTech(dataPeriodo,this.value);
+      google.charts.setOnLoadCallback(drawHistogramTech(dataG4));
+  
+      cakeTech(dataPeriodo,this.value);
+      google.charts.setOnLoadCallback(techSkillCakeDraw(approveTech,reprobateTech));
+      
+    }
+  }) 
+
+  var techSkillDiv= document.createElement("div");
+  techSkillDiv.setAttribute("id","tech_skill");
+  techSkillDiv.classList.add("d-inline-block","chartStyle1");
+  techGraphDiv.appendChild(techSkillDiv);
+
+  var cakeTechDiv= document.createElement("div");
+  cakeTechDiv.setAttribute("id","cakeTech");
+  cakeTechDiv.classList.add("d-inline-block","chartStyle1");
+  techGraphDiv.appendChild(cakeTechDiv);
+
+  var hseGraphDiv= document.createElement("div");
+  hseGraphDiv.setAttribute("id","hseGraph");
+  hseGraphDiv.classList.add("d-inline-block");
+  secondDbRow.appendChild(hseGraphDiv);
+
+  listHse=document.createElement('div');
+  listHse.setAttribute("id","listHse");
+  hseGraphDiv.appendChild(listHse);
+  
+  selectHse=document.createElement('select');
+  selectHse.classList.add("form-control","form-control-sm");
+  listHse.appendChild(selectHse);
+  
+  var optionHse=document.createElement('option');
+  selectHse.appendChild(optionHse);
+
+  selectHse.addEventListener("change",function(){
+    if(this.value!==-1){
+      histogramHse(dataPeriodo,this.value);
+      google.charts.setOnLoadCallback(drawHistogramLife(dataG5));
+      
+      cakeHse(dataPeriodo,this.value)
+      google.charts.setOnLoadCallback(HSESkillCakeDraw(approveHse,reprobateHse));
+    }
+  })
+
+  var lifeSkillDiv= document.createElement("div");
+  lifeSkillDiv.setAttribute("id","life_skill");
+  lifeSkillDiv.classList.add("d-inline-block","chartStyle1");
+  hseGraphDiv.appendChild(lifeSkillDiv);
+
+  var cakeHseDiv= document.createElement("div");
+  cakeHseDiv.setAttribute("id","cakeHse");
+  cakeHseDiv.classList.add("d-inline-block","chartStyle1");
+  hseGraphDiv.appendChild(cakeHseDiv);
+}
+/*INICIO Código dashboard*/
 
 google.charts.load('current', {'packages':['bar']}); //Barra
 google.charts.load("current", {packages:["corechart"]});//Torta, Histograma
 google.charts.load('current', {'packages':['corechart']});//Curvas
+
+  //GRAFICA ENROLLMENT
+var dataG1={};
+function enrollment(data){
+  dataG1={};
+  var sprintStudent;
+  if(data!==undefined && data.hasOwnProperty("students")){
+    for(var i=0; i<data.students.length;i++){    
+      if(data.students[i].hasOwnProperty("sprints")){
+        sprintStudent=data.students[i].sprints 
+        for(var j=0; j<sprintStudent.length;j++){
+          if(dataG1.hasOwnProperty('S'+sprintStudent[j].number)){
+            dataG1['S'+sprintStudent[j].number]=dataG1['S'+sprintStudent[j].number]+1;
+          }else{
+            dataG1['S'+sprintStudent[j].number]=1;
+          }
+        }
+      }
+    }
+  }
+}
 
 function enrollmentDraw(dataG) {
   var data = new google.visualization.DataTable();
@@ -39,36 +210,40 @@ function enrollmentDraw(dataG) {
     }
   };
 
-  var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+  var chart = new google.charts.Bar(enrollmentDiv);
   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 
-var dataG1={};
-function enrollment(data){
-  dataG1={};
+  //GRAFICA ACHIEVEMENT
+var dataG2={};
+function achievement(data){
+  dataG2={}
   var sprintStudent;
   if(data!==undefined && data.hasOwnProperty("students")){
-  for(var i=0; i<data.students.length;i++){    
-    if(data.students[i].hasOwnProperty("sprints")){
-      sprintStudent=data.students[i].sprints 
-      for(var j=0; j<sprintStudent.length;j++){
-        if(dataG1.hasOwnProperty('S'+sprintStudent[j].number)){
-          dataG1['S'+sprintStudent[j].number]=dataG1['S'+sprintStudent[j].number]+1;
-        }else{
-          dataG1['S'+sprintStudent[j].number]=1;
+    for(var i=0; i<data.students.length;i++){    
+      if(data.students[i].hasOwnProperty("sprints")){
+        sprintStudent=data.students[i].sprints 
+        for(var j=0; j<sprintStudent.length;j++){
+          if ((sprintStudent[j].score.hse>840) && (sprintStudent[j].score.tech>1260)){
+            if(dataG2.hasOwnProperty('S'+sprintStudent[j].number)){
+              dataG2['S'+sprintStudent[j].number]=dataG2['S'+sprintStudent[j].number]+1;
+            }else{
+              dataG2['S'+sprintStudent[j].number]=1
+            }
+          }
+        
         }
       }
     }
   }
-  }
-}
+}  
 
 function achievementDraw(dataG2) {
   var data = new google.visualization.DataTable();
   data.addColumn('string','Sprint');
   data.addColumn('number','Score average');
 
-  //ORDENA ELEMENTOS DEL OBJETO
+    //Ordena elementos del objeto
   var sortable = [];
   for (var i in dataG2) {
       sortable.push([i, dataG2[i]]);
@@ -90,64 +265,11 @@ function achievementDraw(dataG2) {
     colors:['#f9a91a','rgb(20, 45, 60)']
   };
 
-  var chart = new google.visualization.LineChart(document.getElementById('achievement'));
+  var chart = new google.visualization.LineChart(achievementDiv);
   chart.draw(data, options);
 }
 
-var dataG2={};
-function achievement(data){
-dataG2={}
-var sprintStudent;
-if(data!==undefined && data.hasOwnProperty("students")){
-  for(var i=0; i<data.students.length;i++){    
-    if(data.students[i].hasOwnProperty("sprints")){
-      sprintStudent=data.students[i].sprints 
-      for(var j=0; j<sprintStudent.length;j++){
-        if ((sprintStudent[j].score.hse>840) && (sprintStudent[j].score.tech>1260)){
-          if(dataG2.hasOwnProperty('S'+sprintStudent[j].number)){
-            dataG2['S'+sprintStudent[j].number]=dataG2['S'+sprintStudent[j].number]+1;
-          }else{
-            dataG2['S'+sprintStudent[j].number]=1
-          }
-        }
-       
-      }
-       
-    }
-  }
-}
-}
-
-  function npsDraw() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string','Sprint');
-    data.addColumn('number','NPS');
-  
-    //ORDENA ELEMENTOS DEL OBJETO
-    var sortable = [];
-    for (var i in dataG3) {
-        sortable.push([i, dataG3[i]]);
-    }
-    
-    sortable.sort(function(a, b) {
-        return a[0] - b[0];
-    });
-  
-    for(var i=0; i<sortable.length;i++){
-      data.addRows([
-        [sortable[i][0],sortable[i][1] ]         
-      ]);
-    }
-    var options = {
-      title: 'Net Promoter Score',
-      curveType: 'function',
-      legend: { position: 'bottom' },
-      colors:['#f9a91a','rgb(20, 45, 60)']
-    };
-  var chart= new google.visualization.LineChart(document.getElementById('nps'));
-  chart.draw(data, options);
-}
-
+  // GRAFICA NET PROMOTER SCORE
 var dataG3={};
 function nps(data){
   var npsSprint;
@@ -160,35 +282,41 @@ function nps(data){
       }  
     }    
   }      
-}
-var listTech=document.createElement('div');
-listTech.setAttribute("id","listTech");
-listTech.style.display="none";
+}  
+function npsDraw() {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string','Sprint');
+  data.addColumn('number','NPS');
 
-var selectTech=document.createElement('select');
-selectTech.classList.add("form-control","form-control-sm");
-listTech.appendChild(selectTech);
-
-var optionTech=document.createElement('option');
-selectTech.appendChild(optionTech);
-var textOption=document.createTextNode('Select Sprint...');
-optionTech.appendChild(textOption);
-
-var techGraph=document.getElementById('techGraph');
-var techSkill=document.getElementById('tech_skill');
-
-techGraph.insertBefore(listTech,techSkill);
-
-selectTech.addEventListener("change",function(){
-  if(this.value!==-1){
-    histogramTech(dataPeriodo,this.value);
-    google.charts.setOnLoadCallback(drawHistogramTech(dataG4));
-
-    cakeTech(dataPeriodo,this.value);
-    google.charts.setOnLoadCallback(techSkillCakeDraw(approveTech,reprobateTech));
-    
+  //Ordena elementos del objeto
+  var sortable = [];
+  for (var i in dataG3) {
+      sortable.push([i, dataG3[i]]);
   }
-})
+  
+  sortable.sort(function(a, b) {
+      return a[0] - b[0];
+  });
+
+  for(var i=0; i<sortable.length;i++){
+    data.addRows([
+      [sortable[i][0],sortable[i][1] ]         
+    ]);
+  }
+  var options = {
+    title: 'Net Promoter Score',
+    curveType: 'function',
+    legend: { position: 'bottom' },
+    colors:['#f9a91a','rgb(20, 45, 60)']
+  };
+  var chart= new google.visualization.LineChart(npsDiv);
+  chart.draw(data, options);
+}
+
+  //DIBUJANDO SELECT DE HISTOGRAMAS Y CAKE GRAPH
+
+
+  //GRAFICA HISTOGRAMA SKILL TECH
 var dataG4={};
 function histogramTech(data,nSprint){
   dataG4={};
@@ -205,6 +333,28 @@ function histogramTech(data,nSprint){
   }
 }
 
+function drawHistogramTech(dataIn) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string','Name');
+  data.addColumn('number','Score');
+
+  for(var i in dataIn){
+    data.addRows([
+      [i,dataIn[i]]          
+    ]);
+  }
+
+  var options = {
+    title: 'Tech Skill',
+    legend: { position: 'none' },
+    colors:['rgb(20, 45, 60)']
+  };
+  var chart = new google.visualization.Histogram(document.getElementById('tech_skill'));
+  chart.draw(data, options);
+  
+}
+
+  //GRAFICA CAKE SKILL TECH 
 var approveTech=0;
 var reprobateTech=0;
 function cakeTech(data,nSprint){
@@ -226,8 +376,106 @@ function cakeTech(data,nSprint){
     }
   }
 }
-function selectSprint(data){
 
+function techSkillCakeDraw(a,b) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Topping');
+  data.addColumn('number', 'Slices');
+  data.addRows([
+  ['Approve', a],
+  ['Reprobate',b],
+  ]);
+
+  var options = {title:'Approval percentages',
+                      width:300,
+                      height:300,
+                      colors: ['#f9a91a','rgb(20, 45, 60)']};
+
+    var chart = new google.visualization.PieChart(document.getElementById('cakeTech'));
+  chart.draw(data, options);
+}
+
+  //GRAFICA HISTOGRAMA SKILL LIFE 
+var dataG5={};
+function histogramHse(data,nSprint){
+  dataG5={};
+  if(data!==undefined && data.hasOwnProperty("students")){
+    for (var i=0; i<data.students.length;i++){
+      if(data.students[i].hasOwnProperty("sprints")){
+        for(var j=0; j<data.students[i].sprints.length;j++){
+          if (data.students[i].sprints[j].number==nSprint && data.students[i].sprints[j].hasOwnProperty("score") ){
+            dataG5[data.students[i].name]=data.students[i].sprints[j].score.hse;
+          }
+        }
+      }
+    }
+  }
+}
+
+function drawHistogramLife(dataIn) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string','Name');
+  data.addColumn('number','Score');
+
+  for(var i in dataIn){
+    data.addRows([
+      [i,dataIn[i]]          
+    ]);
+  }
+
+  var options = {
+    title: 'HSE Skill',
+    legend: { position: 'none' },
+    colors:['rgb(20, 45, 60)']
+  };
+  var chart = new google.visualization.Histogram(document.getElementById('life_skill'));
+  chart.draw(data, options);
+  
+}
+
+  //GRAFICA CAKE SKILL LIFE 
+var approveHse=0;
+var reprobateHse=0;
+function cakeHse(data,nSprint){
+  approveHse=0;
+  reprobateHse=0;
+  if(data!==undefined && data.hasOwnProperty("students")){
+    for (var i=0; i<data.students.length;i++){
+      if(data.students[i].hasOwnProperty("sprints")){
+        for(var j=0; j<data.students[i].sprints.length;j++){
+          if (data.students[i].sprints[j].number==nSprint && data.students[i].sprints[j].hasOwnProperty("score")){
+            if(data.students[i].sprints[j].score.hse>840){
+              approveHse++;
+            }else{
+              reprobateHse++;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function HSESkillCakeDraw(a,b) {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Topping');
+  data.addColumn('number', 'Slices');
+  data.addRows([
+  ['Approve', a],
+  ['Reprobate',b],
+  ]);
+
+  var options = {title:'Approval percentages',
+                     width:300,
+                     height:300,
+                     colors: ['#f9a91a','rgb(20, 45, 60)']};
+
+   var chart = new google.visualization.PieChart(document.getElementById('cakeHse'));
+  chart.draw(data, options);
+}
+
+
+function selectSprint(data){
   if(data!==undefined && data.hasOwnProperty("ratings")){
     while (selectTech.firstChild) {
       selectTech.removeChild(selectTech.firstChild);
@@ -265,190 +513,33 @@ function selectSprint(data){
   } 
 }
 
-function techSkillCakeDraw(a,b) {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Topping');
-  data.addColumn('number', 'Slices');
-  data.addRows([
-  ['Approve', a],
-  ['Reprobate',b],
-  ]);
-
-  var options = {title:'Approval percentages',
-                     width:300,
-                     height:300,
-                     colors: ['#f9a91a','rgb(20, 45, 60)']};
-
-   var chart = new google.visualization.PieChart(document.getElementById('cakeTech'));
-  chart.draw(data, options);
-}
-
-
-function drawHistogramTech(dataIn) {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string','Name');
-  data.addColumn('number','Score');
-
-  for(var i in dataIn){
-    data.addRows([
-      [i,dataIn[i]]          
-    ]);
-  }
-
-  var options = {
-    title: 'Tech Skill',
-    legend: { position: 'none' },
-    colors:['rgb(20, 45, 60)']
-  };
-  var chart = new google.visualization.Histogram(document.getElementById('tech_skill'));
-  chart.draw(data, options);
-  
-}
-var listHse=document.createElement('div');
-listHse.setAttribute("id","listHse");
-listHse.style.display="none";
-
-var selectHse=document.createElement('select');
-selectHse.classList.add("form-control","form-control-sm");
-listHse.appendChild(selectHse);
-
-var optionHse=document.createElement('option');
-selectHse.appendChild(optionHse);
-var textOption1=document.createTextNode('Select Sprint...');
-optionHse.appendChild(textOption1);
-
-var hseGraph=document.getElementById('hseGraph');
-var life_skill=document.getElementById('life_skill');
-
-hseGraph.insertBefore(listHse,life_skill);
-
-function HSESkillCakeDraw(a,b) {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Topping');
-  data.addColumn('number', 'Slices');
-  data.addRows([
-  ['Approve', a],
-  ['Reprobate',b],
-  ]);
-
-  var options = {title:'Approval percentages',
-                     width:300,
-                     height:300,
-                     colors: ['#f9a91a','rgb(20, 45, 60)']};
-
-   var chart = new google.visualization.PieChart(document.getElementById('cakeHse'));
-  chart.draw(data, options);
-}
-
-function drawHistogramLife(dataIn) {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string','Name');
-  data.addColumn('number','Score');
-
-  for(var i in dataIn){
-    data.addRows([
-      [i,dataIn[i]]          
-    ]);
-  }
-
-  var options = {
-    title: 'HSE Skill',
-    legend: { position: 'none' },
-    colors:['rgb(20, 45, 60)']
-  };
-  var chart = new google.visualization.Histogram(document.getElementById('life_skill'));
-  chart.draw(data, options);
-  
-}
-selectHse.addEventListener("change",function(){
-  if(this.value!==-1){
-    histogramHse(dataPeriodo,this.value);
-    google.charts.setOnLoadCallback(drawHistogramLife(dataG5));
-    
-    cakeHse(dataPeriodo,this.value)
-    google.charts.setOnLoadCallback(HSESkillCakeDraw(approveHse,reprobateHse));
-  }
-})
-
-var dataG5={};
-function histogramHse(data,nSprint){
-  dataG5={};
-  if(data!==undefined && data.hasOwnProperty("students")){
-    for (var i=0; i<data.students.length;i++){
-      if(data.students[i].hasOwnProperty("sprints")){
-        for(var j=0; j<data.students[i].sprints.length;j++){
-          if (data.students[i].sprints[j].number==nSprint && data.students[i].sprints[j].hasOwnProperty("score") ){
-            dataG5[data.students[i].name]=data.students[i].sprints[j].score.hse;
-          }
-        }
-      }
-    }
-  }
-}
-
-
-var approveHse=0;
-var reprobateHse=0;
-function cakeHse(data,nSprint){
-  approveHse=0;
-  reprobateHse=0;
-  if(data!==undefined && data.hasOwnProperty("students")){
-    for (var i=0; i<data.students.length;i++){
-      if(data.students[i].hasOwnProperty("sprints")){
-        for(var j=0; j<data.students[i].sprints.length;j++){
-          if (data.students[i].sprints[j].number==nSprint && data.students[i].sprints[j].hasOwnProperty("score")){
-            if(data.students[i].sprints[j].score.hse>840){
-              approveHse++;
-            }else{
-              reprobateHse++;
-            }
-          }
-        }
-      }
-    }
-  }
-}
- //Datos generales para graficar
-var dashboardGenerations=document.getElementsByName("dashboardGeneration");
-var sedes=document.getElementsByName("sede");
-var sede="";
-var periodo="";
-var dataPeriodo="";
-
-for (var i=0; i<sedes.length;i++){
-  periodo="";
-  sedes[i].addEventListener("click", function(){
-    sede=this.id;
-  })
-}
-
-for (var i=0; i<dashboardGenerations.length;i++){
-  dashboardGenerations[i].addEventListener("click", function(){
-    periodo=this.className;    
-    dataSedePeriodo();
-  })
-}
-function studentInfo(data){
-
-}
-
-function dataSedePeriodo(){
-  listTech.style.display="initial";
-  listHse.style.display="initial";
-  dataPeriodo=data[sede][periodo];
-  achievement(dataPeriodo);
-  enrollment(dataPeriodo);
-  nps(dataPeriodo);
-  selectSprint(dataPeriodo);
-  google.charts.setOnLoadCallback(enrollmentDraw(dataG1));
-  google.charts.setOnLoadCallback(achievementDraw(dataG2));
-  google.charts.setOnLoadCallback(npsDraw());  
-};
-
 /*FIN Código dashboard*/
 
 /*INICIO students*/
+var studentGeneration=document.getElementsByName("studentGeneration");
+var nDiv="";
+for (var i=0; i<studentGeneration.length;i++){
+  studentGeneration[i].addEventListener("click", function(){
+    while (board.firstChild) {
+      board.removeChild(board.firstChild);
+    }
+    periodo=this.className;    
+    studentSedePeriodo();
+  })
+}
 
+function studentDraw(){
+
+  if (data.students.length%2!==0){
+    nDiv=(data.students.length%2)+1;
+  }else {
+    nDiv=data.students.length%2;
+  }
+  for(var i=0;i<nDiv;i++){
+    var divCont=document.createElement("div");
+    
+  }
+}
 /*FIN students*/
 
 /*INICIO teachers*/
