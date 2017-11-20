@@ -516,6 +516,8 @@ function selectSprint(data){
 /*FIN Código dashboard*/
 
 /*INICIO students*/
+var periodoStudent="";
+var studentPeriodo="";
 var studentGeneration=document.getElementsByName("studentGeneration");
 var nDiv="";
 for (var i=0; i<studentGeneration.length;i++){
@@ -523,22 +525,49 @@ for (var i=0; i<studentGeneration.length;i++){
     while (board.firstChild) {
       board.removeChild(board.firstChild);
     }
-    periodo=this.className;    
+    periodoStudent=this.className;
     studentSedePeriodo();
+    studentDraw(studentPeriodo);    
   })
 }
+function studentSedePeriodo(){
+  studentPeriodo=data[sede][periodoStudent];
+}
+function studentDraw(data){
+if (data.students.length%3!==0){
+  nDiv=(data.students.length%3)+1;
+}else {
+  nDiv=data.students.length%3;
+}
+var k=0;
+for(var i=0;i<nDiv;i++){
+  var divCont=document.createElement("div");
+  board.appendChild(divCont);
+  for (var j=k; j<k+3; j++){
+    if (data.students[j].hasOwnProperty("name")){
+      var divStudent=document.createElement("div");
+      divStudent.classList.add("d-inline-block", "chartStyle");
+      divCont.appendChild(divStudent);
 
-function studentDraw(){
+      var picture=document.createElement("img");
+      picture.setAttribute("src",data.students[j].photo)
+      divStudent.appendChild(picture);
 
-  if (data.students.length%2!==0){
-    nDiv=(data.students.length%2)+1;
-  }else {
-    nDiv=data.students.length%2;
+      var nameSpace=document.createElement("h3");
+      var name=document.createTextNode(data.students[j].name)
+      nameSpace.appendChild(name);
+      divStudent.appendChild(nameSpace);
+
+      var active=document.createElement("div");
+      if(data.students[j].active){
+        active.style.backgroundColor="yelow";
+      }else{
+        active.style.backgroundColor="grey";
+      }
+    }
   }
-  for(var i=0;i<nDiv;i++){
-    var divCont=document.createElement("div");
-    
-  }
+  k+=3;
+}
 }
 /*FIN students*/
 
