@@ -639,7 +639,7 @@ window.onload=function(){
   function teacherRatingDraw(dataIn){
     var data = new google.visualization.DataTable();
     data.addColumn('string','Sprint');
-    data.addColumn('number','Active');
+    data.addColumn('number','Rating');
     for(var i in dataIn){
       data.addRows([
         [i,dataIn[i]]          
@@ -679,7 +679,7 @@ window.onload=function(){
   function jediRatingDraw(dataIn){
     var data = new google.visualization.DataTable();
     data.addColumn('string','Sprint');
-    data.addColumn('number','Active');
+    data.addColumn('number','Rating');
     for(var i in dataIn){
       data.addRows([
         [i,dataIn[i]]          
