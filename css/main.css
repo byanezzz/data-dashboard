@@ -12,8 +12,35 @@
 .center{
     text-align: center;
 }
-
-
+.btn{
+    float: right;
+    margin-right: 1em;
+    margin-top: 1.3em;
+    background-color: #f9a91a;
+    color:#000;
+    border-color: #f9a91a;
+    
+}
+.btn-ttc:hover{
+    background-color: #ca8714;
+}
+.btn-ttc:focus {
+    background-color: #ca8714;
+    
+    
+  }
+.floatLeft{
+    float: left;
+}
+.profileStyle{
+    width: 25%;
+    margin-right: 3em;
+}
+.teacherRating{
+    height: 30em;
+    margin-top: 3em;
+    margin-right: 5em;
+}
 body {
 	margin: 0;
 }
@@ -42,7 +69,10 @@ html, body {
     margin-right: 1em;
     margin-top: 1.5em;
 }
-#lateral, #board {
+#board{
+    margin-top: 5.7em;
+}
+#lateral {
     margin-top: 5.7em;
     height: 50em;
 	
