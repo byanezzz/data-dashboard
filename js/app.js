@@ -6,6 +6,23 @@ window.onload=function(){
       });
     });
   /*FIN Código barra lateral*/
+
+  /*INICIO Código boton seleccionado barra lateral*/
+$('#dashboard a').click(function(){
+    $('#dashboard a').removeClass("active");
+    $(this).addClass("active");
+}); 
+
+$('#students a').click(function(){
+    $('#dashboard a').removeClass("active");
+    $(this).addClass("active");
+}); 
+
+$('#teachers a').click(function(){
+    $('#dashboard a').removeClass("active");
+    $(this).addClass("active");
+}); 
+/*FIN Código boton seleccionado barra lateral*/
   
     var board=document.createElement("section");
     board.setAttribute("id","board");

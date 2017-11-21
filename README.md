@@ -1,25 +1,31 @@
-# Data Dashboard
+# Producto Final: Data-Dashboard
 
-* **Track:** _Common Core_
+* **Contribuidores:** _Bianca Yañez, Francisca Ramos_
 * **Curso:** _Creando tu primer sitio web interactivo_
 * **Unidad:** _Producto final_
 
 ***
 
-## Flujo de trabajo
+## Descripción
 
-1. Debes realizar un [**fork**](https://gist.github.com/ivandevp/1de47ae69a5e139a6622d78c882e1f74)
-   de este repositorio.
+Nuestro sitio web **Data-Dashboard** es una página propuesta como una mejora en el diseño de despliegue de información para la mejora en la experiencia de usuario. Mediante menús desplegables y botones de fácil acceso distribuimos la información de manera eficiente y visualizable dentro de una misma página. 
 
-2. Luego deberás **clonar** tu fork en tu máquina. Recuerda que el comando a usar
-   es `git clone` y su estructura normalmente se ve así:
+Primero, la navegación inmediata, que es la barra superior nos muestra las sedes disponibles. Haciendo click en cada una, y luego seleccionando el detalle del menú lateral se despliegan inmediatamente los datos generales por año correspondiente a la sede activada.
 
-   ```bash
-   git clone https://github.com/<nombre-de-usuario>/freelancer.git
-   ```
+También se encuentran disponibles los perfiles de alumna por generación.
 
-3. Cuando hayas terminado tu producto, envía un Pull Request a este repositorio
-   (puedes solicitar apoyo de tus profes para este paso).
+***
 
-> Nota: No olvides que es una buena práctica describir tu proyecto en este
-> archivo `README.md` y también desplegar tu web a Github Pages :smiley:.
+## Datos a encontrar:
+
+* La cantidad y el porcentaje que representa el total de estudiantes que superan la meta de puntos técnicos en promedio y por sprint.
+* La cantidad y el porcentaje que representa el total de estudiantes que superan la meta de puntos de HSE en promedio y por sprint.
+* El porcentaje de estudiantes satisfechas con la experiencia de Laboratoria.
+* La puntuación promedio de l@s profesores.
+* La puntuación promedio de l@s jedi masters.
+
+***
+
+### Contacto
+
+Para cualquier duda o información, contactar en grupo de Slack: **retoFinalSpring2** o al correo: ejemplo@laboratoria.cl
